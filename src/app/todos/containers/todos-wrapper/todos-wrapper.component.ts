@@ -5,7 +5,8 @@ import {
   loadTodos,
   createTodo
 } from "src/app/todos/store/actions/todo.actions";
-import * as fromTodos from "../../store/reducers";
+
+import * as fromTodos from "../../store/reducers/todos.reducer";
 
 @Component({
   selector: "app-todos-wrapper",
@@ -14,14 +15,13 @@ import * as fromTodos from "../../store/reducers";
 })
 export class TodosWrapperComponent implements OnInit {
   todos: ITodo[] = [];
-  // constructor(private store: Store<fromTodos.State>) {}
-  constructor() {}
+  constructor(private store: Store<fromTodos.State>) {}
 
   ngOnInit() {
-    // this.store.dispatch(loadTodos());
-    // this.store
-    //   .pipe(select(fromTodos.selectTodos))
-    //   .subscribe(todos => (this.todos = todos));
+    this.store.dispatch(loadTodos());
+    this.store
+      .pipe(select(fromTodos.selectAllTodos))
+      .subscribe(todos => (this.todos = todos));
   }
 
   onAddNewTask(newTodo) {

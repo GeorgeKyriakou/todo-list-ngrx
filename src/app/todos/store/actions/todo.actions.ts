@@ -4,7 +4,7 @@ import { ITodo } from "src/app/todos/entities/ITodo";
 export const loadTodos = createAction("[Todo] Load Todos");
 export const loadTodosSuccess = createAction(
   "[Todo] Load Todos Success",
-  props<ITodo[]>()
+  props<{ todos: ITodo[] }>()
 );
 export const loadTodosFailure = createAction("[Todo] Load Todos Failure");
 

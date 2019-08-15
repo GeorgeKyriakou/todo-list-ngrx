@@ -5,6 +5,7 @@ import { switchMap, catchError } from "rxjs/operators";
 import * as fromTodoActions from "../actions/todo.actions";
 import { TodoService } from "src/app/todos/services/todo.service";
 import { of } from "rxjs";
+import { ITodo } from "../../entities/ITodo";
 
 @Injectable()
 export class TodosEffects {
@@ -13,8 +14,8 @@ export class TodosEffects {
       ofType(fromTodoActions.loadTodos),
       switchMap(() => {
         return this.todoService.loadTodos().pipe(
-          switchMap(todos => {
-            return [fromTodoActions.loadTodosSuccess(todos)];
+          switchMap((todos: ITodo[]) => {
+            return [fromTodoActions.loadTodosSuccess({ todos })];
           })
         );
       })

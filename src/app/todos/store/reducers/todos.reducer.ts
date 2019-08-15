@@ -7,19 +7,19 @@ import { ITodo } from "../../entities/ITodo";
 export const todosAdapter = createEntityAdapter<ITodo>();
 export interface State extends EntityState<ITodo> {}
 
-export const initialState: State = todosAdapter.getInitialState();
+const defaultState = {
+  ids: [],
+  entities: {}
+};
+
+export const initialState: State = todosAdapter.getInitialState(defaultState);
 
 export const todosReducer = createReducer(
   initialState,
   on(featureActions.loadTodos, state => ({ ...state, isLoading: true })),
-  on(featureActions.loadTodosSuccess, (state, todos) =>
-    todosAdapter.addMany(todos, state)
-  )
-  // on(featureActions.loadTodosSuccess, (state, todos) => ({
-  //   ...state,
-  //   isLoading: false,
-  //   todos
-  // }))
+  on(featureActions.loadTodosSuccess, (state, action) => {
+    return todosAdapter.addAll([...action.todos], state);
+  })
 );
 
 export const getTodosState = createFeatureSelector<State>("todos");
