@@ -24,7 +24,7 @@ import { environment } from "src/environments/environment";
     }),
     EffectsModule.forRoot([TodosEffects]),
     StoreDevtoolsModule.instrument({
-      maxAge: 5,
+      maxAge: 10,
       logOnly: environment.production
     })
   ],

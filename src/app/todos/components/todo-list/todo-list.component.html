@@ -11,6 +11,26 @@
 
 <div>
   <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="completed">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Completed
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" (click)="onUpdateTodo(element)">
+        <img
+          width="30"
+          *ngIf="element.completed"
+          src="assets/checked.png"
+          alt="Smiley face"
+        />
+        <img
+          width="30"
+          *ngIf="!element.completed"
+          src="assets/unchecked.png"
+          alt="Sad face"
+        />
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Title
@@ -29,21 +49,21 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="completed">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Completed
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.completed }}
-      </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="due_date">
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Due date
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{ element.due_date | date }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="remove">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Remove
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" (click)="onRemoveTodo(element)">
+        <img width="30" src="assets/remove.png" alt="Sad face" />
       </mat-cell>
     </ng-container>
 

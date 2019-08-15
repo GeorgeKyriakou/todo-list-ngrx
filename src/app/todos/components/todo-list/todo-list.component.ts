@@ -15,7 +15,8 @@ import {
   MatDialog
 } from "@angular/material";
 import { ITodo } from "src/app/todos/entities/ITodo";
-import { AddTodoModalComponent } from "../add-todo-modal/add-todo-modal.component";
+import { updateTodo } from "../../store/actions/todo.actions";
+import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-modal.component";
 
 @Component({
   selector: "app-todo-list",
@@ -25,12 +26,21 @@ import { AddTodoModalComponent } from "../add-todo-modal/add-todo-modal.componen
 export class TodoListComponent implements OnInit, AfterViewInit {
   @Input() todos: ITodo[] = [];
 
-  displayedColumns = ["title", "description", "completed", "due_date"];
+  displayedColumns = [
+    "completed",
+    "title",
+    "description",
+    "due_date",
+    "remove"
+  ];
   dataSource = new MatTableDataSource<ITodo>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @Output() addNewTask: EventEmitter<ITodo> = new EventEmitter();
+
+  @Output() toggleChecked = new EventEmitter<ITodo>();
+  @Output() removeTodo = new EventEmitter<string>();
+
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
@@ -45,23 +55,20 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   onFilter(filter) {
     this.dataSource.filter = filter.trim().toLowerCase();
   }
+  onUpdateTodo(todo: ITodo) {
+    this.toggleChecked.emit(todo);
+  }
 
-  onAddNewTask() {
-    const data: ITodo = {
-      title: "",
-      description: "",
-      due_date: null,
-      completed: false
-    };
-    const dialogRef = this.dialog.open(AddTodoModalComponent, {
-      width: "500px",
-      data
+  onRemoveTodo(todo) {
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: "200px",
+      data: todo.title
     });
 
-    dialogRef.afterClosed().subscribe(newTodo => {
-      newTodo = { ...newTodo, due_date: Date.parse(newTodo.due_date) };
-      this.dataSource.data = [...this.todos, newTodo];
-      this.addNewTask.emit(newTodo);
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.removeTodo.emit(todo.id);
+      }
     });
   }
 }

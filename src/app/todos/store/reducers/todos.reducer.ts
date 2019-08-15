@@ -16,9 +16,23 @@ export const initialState: State = todosAdapter.getInitialState(defaultState);
 
 export const todosReducer = createReducer(
   initialState,
-  on(featureActions.loadTodos, state => ({ ...state, isLoading: true })),
   on(featureActions.loadTodosSuccess, (state, action) => {
     return todosAdapter.addAll([...action.todos], state);
+  }),
+  on(featureActions.createTodosSuccess, (state, action) => {
+    return todosAdapter.addOne(action.todo, state);
+  }),
+  on(featureActions.updateTodosSuccess, (state, { changes, id }) => {
+    return todosAdapter.updateOne(
+      {
+        id,
+        changes
+      },
+      state
+    );
+  }),
+  on(featureActions.deleteTodosSuccess, (state, { todoId }) => {
+    return todosAdapter.removeOne(todoId, state);
   })
 );
 

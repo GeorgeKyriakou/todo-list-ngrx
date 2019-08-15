@@ -12,11 +12,13 @@ import { TodosWrapperComponent } from "./containers/todos-wrapper/todos-wrapper.
 import { TodoListComponent } from "./components/todo-list/todo-list.component";
 import { AddTodoModalComponent } from "./components/add-todo-modal/add-todo-modal.component";
 import { HeaderComponent } from "./containers/header/header.component";
+import { ConfirmationModalComponent } from "./components/confirmation-modal/confirmation-modal.component";
 
 const COMPONENTS = [
   TodosWrapperComponent,
   TodoListComponent,
   AddTodoModalComponent,
+  ConfirmationModalComponent,
   HeaderComponent
 ];
 
@@ -32,6 +34,6 @@ const COMPONENTS = [
     StoreModule.forFeature("todos", todosReducer)
   ],
   exports: COMPONENTS,
-  entryComponents: [AddTodoModalComponent]
+  entryComponents: [AddTodoModalComponent, ConfirmationModalComponent]
 })
 export class TodosModule {}

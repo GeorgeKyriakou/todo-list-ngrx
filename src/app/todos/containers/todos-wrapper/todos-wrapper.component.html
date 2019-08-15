@@ -1,5 +1,8 @@
-<app-todo-list
-  *ngIf="todos.length"
-  [todos]="todos"
-  (addNewTask)="onAddNewTask($event)"
-></app-todo-list>
+<ng-container *ngIf="todos$ | async as todos">
+  <app-todo-list
+    *ngIf="todos.length"
+    [todos]="todos"
+    (toggleChecked)="onToggleChecked($event)"
+    (removeTodo)="onRemoveTodo($event)"
+  ></app-todo-list>
+</ng-container>

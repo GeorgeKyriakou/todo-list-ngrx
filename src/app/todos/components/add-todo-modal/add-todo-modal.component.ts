@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { ITodo } from "src/app/todos/entities/ITodo";
 
 @Component({
-  selector: "app-stop-training",
+  selector: "app-add-todo",
   styles: [
     `
       mat-form-field {

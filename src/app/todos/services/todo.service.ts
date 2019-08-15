@@ -17,6 +17,14 @@ export class TodoService {
   }
 
   createTodo(todo: ITodo) {
-    return this.http.post(`${this.baseUrl}/add`, { todo }) as Observable<ITodo>;
+    return this.http.post<ITodo>(`${this.baseUrl}/add`, { todo });
+  }
+
+  updateTodo(todo: ITodo) {
+    return this.http.put<ITodo>(`${this.baseUrl}/update`, { todo });
+  }
+
+  removeTodo(todoId: string) {
+    return this.http.delete(`${this.baseUrl}/delete/${todoId}`);
   }
 }
