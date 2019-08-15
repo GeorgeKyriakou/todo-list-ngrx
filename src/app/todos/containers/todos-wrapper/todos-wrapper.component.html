@@ -1,0 +1,5 @@
+<app-todo-list
+  *ngIf="todos.length"
+  [todos]="todos"
+  (addNewTask)="onAddNewTask($event)"
+></app-todo-list>

@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "qlik-todo-angular"
+    }
+  },
+  "defaultProject": "qlik-todo-angular",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

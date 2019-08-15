@@ -1,0 +1,31 @@
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { TodosWrapperComponent } from "./containers/todos-wrapper/todos-wrapper.component";
+import { TodoListComponent } from "./components/todo-list/todo-list.component";
+import { AddTodoModalComponent } from "./components/add-todo-modal/add-todo-modal.component";
+import { StoreModule } from "@ngrx/store";
+import { todosReducer } from "./store/reducers/todos.reducer";
+import { MaterialModule } from "../material.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+
+@NgModule({
+  declarations: [
+    TodosWrapperComponent,
+    TodoListComponent,
+    AddTodoModalComponent
+  ],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    FormsModule,
+    HttpClientModule,
+    StoreModule.forFeature("todos", todosReducer)
+  ],
+  entryComponents: [AddTodoModalComponent]
+})
+export class TodosModule {}
