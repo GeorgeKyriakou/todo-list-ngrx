@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-button>
+      <mat-icon>list</mat-icon>
+    </button>
+  </div>
+  <div>Number of todos today: {{ todos.length }}</div>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+      <li>
+        <button>New</button>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

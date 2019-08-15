@@ -11,11 +11,13 @@ import { HttpClientModule } from "@angular/common/http";
 import { TodosWrapperComponent } from "./containers/todos-wrapper/todos-wrapper.component";
 import { TodoListComponent } from "./components/todo-list/todo-list.component";
 import { AddTodoModalComponent } from "./components/add-todo-modal/add-todo-modal.component";
+import { HeaderComponent } from "./containers/header/header.component";
 
 const COMPONENTS = [
   TodosWrapperComponent,
   TodoListComponent,
-  AddTodoModalComponent
+  AddTodoModalComponent,
+  HeaderComponent
 ];
 
 @NgModule({

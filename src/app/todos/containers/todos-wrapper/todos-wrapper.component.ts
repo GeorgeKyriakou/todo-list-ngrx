@@ -25,6 +25,6 @@ export class TodosWrapperComponent implements OnInit {
   }
 
   onAddNewTask(newTodo) {
-    // this.store.dispatch(createTodo(newTodo));
+    this.store.dispatch(createTodo(newTodo));
   }
 }
