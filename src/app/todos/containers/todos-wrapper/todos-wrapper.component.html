@@ -1,7 +1,6 @@
-<ng-container *ngIf="todos$ | async as todos">
+<ng-container *ngIf="(todos$ | async).length">
   <app-todo-list
-    *ngIf="todos.length"
-    [todos]="todos"
+    [todos$]="todos$"
     (toggleChecked)="onToggleChecked($event)"
     (removeTodo)="onRemoveTodo($event)"
   ></app-todo-list>

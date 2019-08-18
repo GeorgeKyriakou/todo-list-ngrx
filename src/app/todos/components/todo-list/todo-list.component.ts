@@ -17,6 +17,7 @@ import {
 import { ITodo } from "src/app/todos/entities/ITodo";
 import { updateTodo } from "../../store/actions/todo.actions";
 import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-modal.component";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-todo-list",
@@ -24,7 +25,8 @@ import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-m
   styleUrls: ["./todo-list.component.scss"]
 })
 export class TodoListComponent implements OnInit, AfterViewInit {
-  @Input() todos: ITodo[] = [];
+  @Input() todos$: Observable<ITodo[]>;
+  dataSource: MatTableDataSource<ITodo>;
 
   displayedColumns = [
     "completed",
@@ -33,7 +35,6 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     "due_date",
     "remove"
   ];
-  dataSource = new MatTableDataSource<ITodo>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -44,8 +45,11 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.dataSource.data = this.todos;
+    this.todos$.subscribe(todos => {
+      this.dataSource = new MatTableDataSource(todos);
+    });
   }
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -55,6 +59,7 @@ export class TodoListComponent implements OnInit, AfterViewInit {
   onFilter(filter) {
     this.dataSource.filter = filter.trim().toLowerCase();
   }
+
   onUpdateTodo(todo: ITodo) {
     this.toggleChecked.emit(todo);
   }

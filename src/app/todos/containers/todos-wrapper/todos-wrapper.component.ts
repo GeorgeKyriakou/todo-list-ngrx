@@ -17,6 +17,7 @@ import { Observable } from "rxjs";
 })
 export class TodosWrapperComponent implements OnInit {
   todos$: Observable<ITodo[]>;
+
   constructor(private store: Store<fromTodos.State>) {}
 
   ngOnInit() {
