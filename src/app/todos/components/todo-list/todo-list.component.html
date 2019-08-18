@@ -15,7 +15,11 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Completed
       </mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="onUpdateTodo(element)">
+      <mat-cell
+        *matCellDef="let element"
+        (click)="onUpdateTodo(element)"
+        class="toggle-checked"
+      >
         <img
           width="30"
           *ngIf="element.completed"
@@ -62,8 +66,12 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Remove
       </mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="onRemoveTodo(element)">
-        <img width="30" src="assets/remove.png" alt="Sad face" />
+      <mat-cell
+        *matCellDef="let element"
+        (click)="onRemoveTodo(element)"
+        class="remove-box"
+      >
+        <img width="30" src="assets/remove.png" alt="remove todo" />
       </mat-cell>
     </ng-container>
 

@@ -1,12 +1,15 @@
 <mat-toolbar color="primary">
-  <div fxHide.gt-xs>
-    <img
-      src="https://material.angular.io/assets/img/homepage/angular-white-transparent.svg"
-      alt=""
-    />
-  </div>
-  <div>Tasks for today: {{ todos.length }}</div>
-  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+  <img
+    fxLayoutAlign="center"
+    width="40"
+    src="assets/angular.png"
+    alt="angular"
+  />
+  <ng-container *ngIf="todos$ | async as todos">
+    <div *ngIf="todos.length">{{ todos.length }} tasks remaining</div>
+    <div *ngIf="!todos.length">No tasks left to do!! Add new here</div>
+  </ng-container>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
       <li>
         <button mat-button (click)="onAddNewTask()">New</button>

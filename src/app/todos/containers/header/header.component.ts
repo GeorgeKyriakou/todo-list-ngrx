@@ -5,13 +5,15 @@ import { loadTodos, createTodo } from "../../store/actions/todo.actions";
 import { ITodo } from "../../entities/ITodo";
 import { MatDialog } from "@angular/material";
 import { AddTodoModalComponent } from "../../components/add-todo-modal/add-todo-modal.component";
+import { Observable } from "rxjs";
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit {
-  todos: ITodo[] = [];
+  todos$: Observable<ITodo[]>;
+
   constructor(
     private store: Store<fromTodos.State>,
     public dialog: MatDialog
@@ -19,16 +21,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadTodos());
-    this.store
-      .pipe(select(fromTodos.selectAllTodos))
-      .subscribe(todos => (this.todos = todos));
+    this.todos$ = this.store.pipe(select(fromTodos.selectAll));
   }
 
   onAddNewTask() {
     const data: ITodo = {
       title: "",
       description: "",
-      due_date: null,
+      due_date: new Date(),
       completed: false
     };
     const dialogRef = this.dialog.open(AddTodoModalComponent, {

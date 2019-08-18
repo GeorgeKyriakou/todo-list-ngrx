@@ -21,11 +21,15 @@ export class TodosWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadTodos());
-    this.todos$ = this.store.pipe(select(fromTodos.selectAllTodos));
+    this.todos$ = this.store.pipe(select(fromTodos.selectAll));
   }
 
   onToggleChecked(todo) {
-    this.store.dispatch(updateTodo({ todo }));
+    const updated = {
+      ...todo,
+      completed: !todo.completed
+    };
+    this.store.dispatch(updateTodo({ todo: updated }));
   }
 
   onRemoveTodo(todoId) {
