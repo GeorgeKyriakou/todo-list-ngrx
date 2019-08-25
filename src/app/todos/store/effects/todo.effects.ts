@@ -1,15 +1,33 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from "@ngrx/effects";
-import { switchMap, catchError, exhaustMap } from "rxjs/operators";
+import { switchMap, catchError, exhaustMap, map } from "rxjs/operators";
 
 import * as fromTodoActions from "../actions/todo.actions";
 import { TodoService } from "src/app/todos/services/todo.service";
 import { of } from "rxjs";
 import { ITodo } from "../../entities/ITodo";
 import { Update } from "@ngrx/entity";
+import Generator from "../../util/generator.service";
+
+const generator = new Generator();
 
 @Injectable()
 export class TodosEffects {
+  generateDefault$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromTodoActions.generateTodo),
+      switchMap(() => {
+        return generator.getRandom().pipe(
+          switchMap(generated => {
+            console.log(generated);
+
+            return [fromTodoActions.createTodosSuccess({ todo: generated })];
+          })
+        );
+      })
+    )
+  );
+
   loadTodos$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromTodoActions.loadTodos),

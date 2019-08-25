@@ -5,12 +5,23 @@
     src="assets/angular.png"
     alt="angular"
   />
-  <ng-container *ngIf="todos$ | async as todos">
-    <div *ngIf="todos.length">{{ todos.length }} tasks remaining</div>
-    <div *ngIf="!todos.length">No tasks left to do!! Add new here</div>
-  </ng-container>
+
+  <div *ngIf="todos.length && toBeDone">
+    {{ toBeDone }} {{ toBeDone === 1 ? "task" : "tasks" }} remaining
+  </div>
+  <div *ngIf="todos.length && !toBeDone">
+    You're all done! Fika is well deserved :)
+  </div>
+  <div *ngIf="!todos.length" class="header-content">
+    <p>No tasks left to do!! Click new to add one</p>
+    <img fxLayoutAlign="center" src="assets/arrow.png" alt="angular" />
+  </div>
+
   <div fxFlex fxLayout fxLayoutAlign="flex-end">
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+      <li>
+        <button mat-button (click)="onAddDefaultTasks()">Generate</button>
+      </li>
       <li>
         <button mat-button (click)="onAddNewTask()">New</button>
       </li>

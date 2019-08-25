@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ITodo } from "../entities/ITodo";
 import { environment } from "../../../environments/environment";
-import { Observable } from "rxjs";
+import { of, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -12,6 +12,9 @@ export class TodoService {
 
   constructor(private http: HttpClient) {}
 
+  generateTodo() {
+    return this.http.get<ITodo[]>(`${this.baseUrl}/defaults`);
+  }
   loadTodos() {
     return this.http.get<ITodo[]>(`${this.baseUrl}/all`);
   }

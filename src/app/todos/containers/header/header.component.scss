@@ -4,3 +4,10 @@ ul {
 img {
   padding: 7px 5px;
 }
+.header-content {
+  display: inline-flex;
+  img {
+    align-self: center;
+    height: 45px;
+  }
+}

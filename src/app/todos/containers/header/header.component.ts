@@ -1,18 +1,23 @@
 import { Component, OnInit } from "@angular/core";
 import * as fromTodos from "../../store/reducers/todos.reducer";
 import { Store, select } from "@ngrx/store";
-import { loadTodos, createTodo } from "../../store/actions/todo.actions";
+import {
+  loadTodos,
+  createTodo,
+  generateTodo
+} from "../../store/actions/todo.actions";
 import { ITodo } from "../../entities/ITodo";
 import { MatDialog } from "@angular/material";
 import { AddTodoModalComponent } from "../../components/add-todo-modal/add-todo-modal.component";
-import { Observable } from "rxjs";
+
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit {
-  todos$: Observable<ITodo[]>;
+  todos: ITodo[] = [];
+  toBeDone: number;
 
   constructor(
     private store: Store<fromTodos.State>,
@@ -21,7 +26,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(loadTodos());
-    this.todos$ = this.store.pipe(select(fromTodos.selectAll));
+    this.store.pipe(select(fromTodos.selectAll)).subscribe(todos => {
+      this.todos = todos;
+      this.toBeDone = this.todos.map(t => t.completed).filter(c => !c).length;
+    });
   }
 
   onAddNewTask() {
@@ -45,5 +53,12 @@ export class HeaderComponent implements OnInit {
         this.store.dispatch(createTodo(newTodo));
       }
     });
+  }
+  onAddDefaultTasks() {
+    this.store.dispatch(generateTodo());
+    // this.store.pipe(select(fromTodos.selectAll)).subscribe(todos => {
+    //   this.todos = todos;
+    //   this.toBeDone = this.todos.map(t => t.completed).filter(c => !c).length;
+    // });
   }
 }

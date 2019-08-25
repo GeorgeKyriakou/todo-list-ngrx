@@ -1,9 +1,4 @@
-import {
-  createReducer,
-  on,
-  createFeatureSelector,
-  createSelector
-} from "@ngrx/store";
+import { createReducer, on, createFeatureSelector } from "@ngrx/store";
 import { EntityState, createEntityAdapter } from "@ngrx/entity";
 import * as featureActions from "../actions/todo.actions";
 
@@ -16,6 +11,9 @@ export const initialState: State = todosAdapter.getInitialState();
 
 export const todosReducer = createReducer(
   initialState,
+  on(featureActions.generateTodoSuccess, (state, action) =>
+    todosAdapter.addAll(action.todos, state)
+  ),
   on(featureActions.loadTodosSuccess, (state, action) =>
     todosAdapter.addAll(action.todos, state)
   ),

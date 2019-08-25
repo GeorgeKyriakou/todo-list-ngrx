@@ -15,7 +15,7 @@ import {
   MatDialog
 } from "@angular/material";
 import { ITodo } from "src/app/todos/entities/ITodo";
-import { updateTodo } from "../../store/actions/todo.actions";
+
 import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-modal.component";
 import { Observable } from "rxjs";
 
@@ -36,8 +36,18 @@ export class TodoListComponent implements OnInit, AfterViewInit {
     "remove"
   ];
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.dataSource.sort = this.sort;
+  }
+  private paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) set matPaginator(
+    mp: MatPaginator
+  ) {
+    this.paginator = mp;
+    this.dataSource.paginator = this.paginator;
+  }
 
   @Output() toggleChecked = new EventEmitter<ITodo>();
   @Output() removeTodo = new EventEmitter<string>();
@@ -52,7 +62,6 @@ export class TodoListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
   }
 
