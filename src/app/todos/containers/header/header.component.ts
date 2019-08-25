@@ -18,6 +18,7 @@ import { AddTodoModalComponent } from "../../components/add-todo-modal/add-todo-
 export class HeaderComponent implements OnInit {
   todos: ITodo[] = [];
   toBeDone: number;
+  headerText: string = null;
 
   constructor(
     private store: Store<fromTodos.State>,
@@ -56,9 +57,17 @@ export class HeaderComponent implements OnInit {
   }
   onAddDefaultTasks() {
     this.store.dispatch(generateTodo());
-    // this.store.pipe(select(fromTodos.selectAll)).subscribe(todos => {
-    //   this.todos = todos;
-    //   this.toBeDone = this.todos.map(t => t.completed).filter(c => !c).length;
-    // });
+  }
+
+  get getHeaderText() {
+    if (this.todos.length && this.toBeDone) {
+      return `${this.toBeDone} ${
+        this.toBeDone === 1 ? "task" : "tasks"
+      } remaining`;
+    } else if (this.todos.length && !this.toBeDone) {
+      return "You're all done! Fika is in order :)";
+    } else {
+      return "No tasks left to do!! Click new to add one";
+    }
   }
 }

@@ -1,13 +1,13 @@
 import { createAction, props, union } from "@ngrx/store";
 import { ITodo } from "src/app/todos/entities/ITodo";
 
-export const generateTodo = createAction("[Todo] Load Default Todos");
+export const generateTodo = createAction("[Todo] Generate Default Todos");
 export const generateTodoSuccess = createAction(
-  "[Todo] Load Default Todos Success",
-  props<{ todos: ITodo[] }>()
+  "[Todo] Generate Default Todos Success",
+  props<{ todo: ITodo }>()
 );
 export const generateTodoFailure = createAction(
-  "[Todo] Load Default Todos Failure"
+  "[Todo] Generate Default Todos Failure"
 );
 
 export const loadTodos = createAction("[Todo] Load Todos");

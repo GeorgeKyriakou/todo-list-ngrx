@@ -12,7 +12,7 @@ export const initialState: State = todosAdapter.getInitialState();
 export const todosReducer = createReducer(
   initialState,
   on(featureActions.generateTodoSuccess, (state, action) =>
-    todosAdapter.addAll(action.todos, state)
+    todosAdapter.addOne(action.todo, state)
   ),
   on(featureActions.loadTodosSuccess, (state, action) =>
     todosAdapter.addAll(action.todos, state)

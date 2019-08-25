@@ -17,10 +17,8 @@ export class TodosEffects {
     this.actions$.pipe(
       ofType(fromTodoActions.generateTodo),
       switchMap(() => {
-        return generator.getRandom().pipe(
-          switchMap(generated => {
-            console.log(generated);
-
+        return this.todoService.createTodo(generator.getRandom()).pipe(
+          switchMap((generated: ITodo) => {
             return [fromTodoActions.createTodosSuccess({ todo: generated })];
           })
         );

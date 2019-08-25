@@ -6,15 +6,8 @@
     alt="angular"
   />
 
-  <div *ngIf="todos.length && toBeDone">
-    {{ toBeDone }} {{ toBeDone === 1 ? "task" : "tasks" }} remaining
-  </div>
-  <div *ngIf="todos.length && !toBeDone">
-    You're all done! Fika is well deserved :)
-  </div>
-  <div *ngIf="!todos.length" class="header-content">
-    <p>No tasks left to do!! Click new to add one</p>
-    <img fxLayoutAlign="center" src="assets/arrow.png" alt="angular" />
+  <div class="header-content">
+    {{ getHeaderText }}
   </div>
 
   <div fxFlex fxLayout fxLayoutAlign="flex-end">

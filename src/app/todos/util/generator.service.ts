@@ -1,5 +1,6 @@
 import { of, Observable } from "rxjs";
 import { ITodo } from "../entities/ITodo";
+import { Injectable } from "@angular/core";
 
 const todoIdeas = [
   {
@@ -40,10 +41,9 @@ const todoIdeas = [
   }
 ];
 
+@Injectable()
 export default class Generator {
   getRandom() {
-    return of(
-      todoIdeas[Math.floor(Math.random() * todoIdeas.length)]
-    ) as Observable<ITodo>;
+    return todoIdeas[Math.floor(Math.random() * todoIdeas.length)];
   }
 }
